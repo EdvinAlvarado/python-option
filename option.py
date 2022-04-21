@@ -75,11 +75,11 @@ class Option(Generic[T]):
 #         if self._is_some:
 #             return self._val
 #         return type(self._val)()
-    def map(self, f: Callable) -> Option[U]:
+    def map(self, f: Callable[[T], U]) -> Option[U]:
         match self._is_some:
             case True: return Option.Some(f(self._val))
-            case False: return Option.NONE()
-    def map_or(self, f: Callable, default: U) -> Option[U]:
+            case False: return Option.NONE() # type: ignore
+    def map_or(self, f: Callable[[T], U], default: U) -> Option[U]:
         match self._is_some:
             case True: return Option.Some(f(self._val))
             case False: return Option.Some(default)
@@ -91,7 +91,7 @@ class Option(Generic[T]):
     #     match self._is_some:
     #         case True: return Option.Some(f(self._val))
     #         case False: return Option.Some(default)
-    def filter(self, f: Callable) -> Option[T]:
+    def filter(self, f: Callable[[T], bool]) -> Option[T]:
         if self._is_some:
             match f(self._val):
                 case True: return self
@@ -121,7 +121,7 @@ class Option(Generic[T]):
     def zip(self, opt: Option[U]) -> Option[tuple[T, U]]:
         if self._is_some and self._is_some:
             return Option.Some((self._val, opt.unwrap()))
-        return Option.NONE()
+        return Option.NONE() # type: ignore
 
     def __str__(self) -> str:
         if self._is_some:
