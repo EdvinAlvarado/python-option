@@ -71,10 +71,10 @@ class Option(Generic[T]):
             return self._val
         return default
     # Need to somehow know what type it could had been
-    def unwrap_or_default(self) -> T:
-        if self._is_some:
-            return self._val
-        return type(self._val)()
+#     def unwrap_or_default(self) -> T:
+#         if self._is_some:
+#             return self._val
+#         return type(self._val)()
     def map(self, f: Callable) -> Option[U]:
         match self._is_some:
             case True: return Option.Some(f(self._val))
