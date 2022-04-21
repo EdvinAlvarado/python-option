@@ -123,6 +123,11 @@ class Option(Generic[T]):
             return Option.Some((self._val, opt.unwrap()))
         return Option.NONE()
 
+    def __str__(self) -> str:
+        if self._is_some:
+            return f"Some({self._val})"
+        return "NONE()"
+
 
 
 if __name__ == "__main__":
