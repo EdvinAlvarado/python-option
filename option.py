@@ -35,7 +35,7 @@ class Option(Generic[T]):
     def __init__(self, value: T, is_some: bool) -> None:
         self._val = value
         self._is_some = is_some
-        self._type = type(value)
+        self._type: T = type(value)
     
     @classmethod
     def Some(cls, value: T) -> Option[T]:
@@ -82,10 +82,6 @@ class Option(Generic[T]):
         match self._is_some:
             case True: return Option.Some(f(self._val))
             case False: return Option.Some(default)
-    # def map_or_default(self, f: Callable) -> Option[U]:
-    #     match self._is_some:
-    #         case True: return Option.Some(f(self._val))
-    #         case False: return Option.Some()
     # def map_or_else(self, f: Callable, default: Callable) -> Option[U]:
     #     match self._is_some:
     #         case True: return Option.Some(f(self._val))
@@ -118,7 +114,7 @@ class Option(Generic[T]):
             return self._val == v
         return False
     def zip(self, opt: Option[U]) -> Option[tuple[T, U]]:
-        if self._is_some and self._is_some:
+        if self._is_some and opt._is_some:
             return Option.Some((self._val, opt.unwrap()))
         return Option.NONE() # type: ignore
 
