@@ -1,3 +1,4 @@
+#!/usr/bin/python
 """
 MIT License
 
@@ -24,8 +25,6 @@ SOFTWARE.
 
 
 from __future__ import annotations
-from ast import Call
-from multiprocessing.sharedctypes import Value
 from typing import Callable, Generic, TypeVar, Optional
 
 
@@ -119,7 +118,7 @@ class Option(Generic[T]):
             return self._val == v
         return False
     def zip(self, opt: Option[U]) -> Option[tuple[T, U]]:
-        if self._is_some and opt._is_some:
+        if self._is_some and self._is_some:
             return Option.Some((self._val, opt.unwrap()))
         return Option.NONE() # type: ignore
 
