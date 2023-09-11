@@ -35,7 +35,7 @@ class Option(Generic[T]):
     def __init__(self, value: T, is_some: bool) -> None:
         self._val = value
         self._is_some = is_some
-        self._type: T = type(value)
+        self._type = type(value)
     
     @classmethod
     def Some(cls, value: T) -> Option[T]:
